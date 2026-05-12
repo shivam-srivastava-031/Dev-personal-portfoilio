@@ -269,7 +269,7 @@ const Hero = () => {
                 icon: <Linkedin className="h-5 w-5" />,
               },
               {
-                href: "mailto:shivamsrivastava1307@gmail.com",
+                href: "mailto:shivamsrivastava@1307",
                 label: "Email",
                 icon: <Mail className="h-5 w-5" />,
               },
