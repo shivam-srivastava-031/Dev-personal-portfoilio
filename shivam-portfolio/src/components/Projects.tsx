@@ -5,10 +5,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, X, Monitor, Bot, Recycle } from "lucide-react";
-import lmsImage from "@/assets/project-lms.jpg";
-import chatbotImage from "@/assets/project-chatbot.jpg";
-import wasteImage from "@/assets/project-waste.jpg";
+import { ExternalLink, Github, BarChart3, AudioLines, TrendingUp } from "lucide-react";
+import devAnalyticsImage from "@/assets/project-dev-analytics.png";
+import devAudioImage from "@/assets/project-dev-audio.png";
+import salesAnalysisImage from "@/assets/project-sales-analysis.png";
 
 const Projects = () => {
   const ref = useRef(null);
@@ -18,55 +18,55 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "Learning Management System (LMS)",
-      description: "A comprehensive LMS platform enabling course creation, student enrollment, and progress tracking with secure authentication and role-based access control.",
-      image: lmsImage,
-      icon: <Monitor className="h-6 w-6" />,
-      techStack: ["Next.js", "Node.js", "MongoDB", "HTML/CSS", "JavaScript"],
+      title: "Dev Analytics — Data Analytics Platform",
+      description: "A full-stack analytics web platform for data visualization, reporting, and performance tracking. Includes EDA workflows, analytical dashboards, and REST API integration.",
+      image: devAnalyticsImage,
+      icon: <BarChart3 className="h-6 w-6" />,
+      techStack: ["React.js", "Node.js", "MongoDB", "REST APIs"],
       features: [
-        "Secure user authentication & role-based access",
-        "Interactive dashboards for students and instructors", 
-        "Course creation and enrollment system",
-        "Progress tracking and analytics",
-        "Responsive design for all devices"
+        "Full-stack analytics web platform for data visualization & reporting",
+        "Data processing, exploratory data analysis (EDA), and structured data handling",
+        "Responsive frontend components with efficient data management",
+        "REST APIs, database integration, and scalable application architecture",
+        "Analytical dashboards and visual reports for data-driven insights"
       ],
-      githubUrl: "https://github.com/maclare031",
+      githubUrl: "https://github.com/shivam-srivastava-031/Dev-analytics",
       demoUrl: "#",
       color: "from-primary to-primary/70"
     },
     {
       id: 2,
-      title: "AI Chatbot with Gemini API",
-      description: "An intelligent AI-powered chatbot leveraging Google's Gemini API for natural language understanding and context-aware responses.",
-      image: chatbotImage,
-      icon: <Bot className="h-6 w-6" />,
-      techStack: ["JavaScript", "Node.js", "Gemini API", "HTML/CSS"],
+      title: "Dev Audio — AI/Audio Processing App",
+      description: "An audio-based web application focused on audio processing and intelligent system integration, with frontend and backend development for audio workflows.",
+      image: devAudioImage,
+      icon: <AudioLines className="h-6 w-6" />,
+      techStack: ["JavaScript", "APIs", "Audio Processing", "Full-Stack"],
       features: [
-        "Google Gemini API integration for intelligent responses",
-        "Context-aware conversation handling",
-        "Natural language understanding capabilities",
-        "Clean and intuitive web interface",
-        "Real-time chat functionality"
+        "Audio processing and intelligent system integration",
+        "Frontend and backend development for audio workflows",
+        "Structured application logic and API integration",
+        "Modern web technologies with Git & GitHub for version control",
+        "Scalable application architecture and multimedia processing"
       ],
-      githubUrl: "https://github.com/maclare031",
+      githubUrl: "https://github.com/shivam-srivastava-031/Dev-audio",
       demoUrl: "#",
       color: "from-accent to-accent/70"
     },
     {
       id: 3,
-      title: "Waste Type Classifier",
-      description: "A machine learning model that classifies waste into categories (organic, recyclable, hazardous) with real-time prediction capabilities.",
-      image: wasteImage,
-      icon: <Recycle className="h-6 w-6" />,
-      techStack: ["Python", "TensorFlow/Keras", "OpenCV", "Flask"],
+      title: "Sales Data Analysis Project",
+      description: "Comprehensive sales data analysis using Python with data cleaning, preprocessing, trend analysis, seasonal pattern identification, and actionable business insights.",
+      image: salesAnalysisImage,
+      icon: <TrendingUp className="h-6 w-6" />,
+      techStack: ["Python", "Pandas", "Matplotlib", "Seaborn"],
       features: [
-        "ML model for waste classification",
-        "Image preprocessing and data augmentation",
-        "Real-time prediction web interface",
-        "Multiple waste category support",
-        "High accuracy classification results"
+        "Data cleaning and preprocessing on sales datasets",
+        "Trend analysis and seasonal pattern identification using EDA",
+        "Dashboards and visual reports using Matplotlib & Seaborn",
+        "Actionable insights for business decision-making",
+        "Revenue optimization recommendations"
       ],
-      githubUrl: "https://github.com/maclare031",
+      githubUrl: "https://github.com/shivam-srivastava-031",
       demoUrl: "#",
       color: "from-primary to-accent"
     }
@@ -96,7 +96,7 @@ const Projects = () => {
             Featured Projects
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Showcasing technical expertise through innovative web applications and intelligent systems
+            Building data-driven platforms and intelligent web applications
           </p>
         </motion.div>
 
@@ -230,14 +230,16 @@ const Projects = () => {
                       <Github className="mr-2 h-4 w-4" />
                       View on GitHub
                     </Button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => window.open(selectedProjectData.demoUrl, '_blank')}
-                      className="flex-1"
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Live Demo
-                    </Button>
+                    {selectedProjectData.demoUrl !== "#" && (
+                      <Button 
+                        variant="outline"
+                        onClick={() => window.open(selectedProjectData.demoUrl, '_blank')}
+                        className="flex-1"
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Live Demo
+                      </Button>
+                    )}
                   </div>
                 </div>
               </>

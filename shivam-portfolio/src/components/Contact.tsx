@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, Github, MapPin, Send, User, MessageSquare } from "lucide-react";
+import { Mail, Phone, Github, MapPin, Send, User, MessageSquare, Linkedin } from "lucide-react";
 
 const Contact = () => {
   const ref = useRef(null);
@@ -38,16 +38,23 @@ const Contact = () => {
     {
       icon: <Github className="h-5 w-5" />,
       label: "GitHub",
-      value: "github.com/maclare031",
-      href: "https://github.com/maclare031",
+      value: "github.com/shivam-srivastava-031",
+      href: "https://github.com/shivam-srivastava-031",
       color: "text-primary"
+    },
+    {
+      icon: <Linkedin className="h-5 w-5" />,
+      label: "LinkedIn",
+      value: "Shivam Kumar Srivastava",
+      href: "https://linkedin.com/in/shivam-kumar-srivastava-675893211",
+      color: "text-accent"
     },
     {
       icon: <MapPin className="h-5 w-5" />,
       label: "Location",
       value: "Lucknow, India",
       href: "#",
-      color: "text-accent"
+      color: "text-primary"
     }
   ];
 
@@ -95,7 +102,7 @@ const Contact = () => {
             Let's Connect
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Ready to collaborate on your next project or discuss business opportunities? Let's start a conversation.
+            Ready to collaborate on your next project or discuss opportunities? Let's start a conversation.
           </p>
         </motion.div>
 
@@ -110,10 +117,9 @@ const Contact = () => {
             <div>
               <h3 className="text-2xl font-bold mb-6 text-foreground">Get in Touch</h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                I'm always interested in discussing new opportunities, innovative projects, 
-                or simply connecting with fellow developers and business professionals. 
-                Whether you have a project in mind or want to explore potential collaborations, 
-                I'd love to hear from you.
+                I'm always interested in discussing new opportunities in data analytics, 
+                software development, or technology-driven roles. Whether you have a project 
+                in mind or want to explore potential collaborations, I'd love to hear from you.
               </p>
             </div>
 
@@ -160,7 +166,7 @@ const Contact = () => {
                 <p className="text-primary font-semibold">Available for new opportunities</p>
               </div>
               <p className="text-muted-foreground text-sm mt-2">
-                Currently open to full-time positions, freelance projects, and consulting opportunities.
+                Currently open to roles in Data Analytics, Software Development, and Technology-driven positions.
               </p>
             </motion.div>
 

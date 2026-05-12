@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Calendar, BookOpen, Award } from "lucide-react";
+import { GraduationCap, Calendar, BookOpen, Award, ShieldCheck } from "lucide-react";
 
 const Education = () => {
   const ref = useRef(null);
@@ -17,23 +17,23 @@ const Education = () => {
       institution: "BBD Engineering College, Lucknow",
       period: "2022 - 2026 (Expected)",
       status: "In Progress",
-      description: "Focused on software engineering, algorithms, data structures, and modern development practices.",
+      description: "Focused on software engineering, data analytics, algorithms, data structures, and modern development practices.",
       icon: <GraduationCap className="h-6 w-6" />,
       color: "primary",
       achievements: [
-        "Strong foundation in programming and software engineering",
-        "Completed multiple full-stack development projects",
-        "Active participation in technical workshops and seminars"
+        "Strong foundation in programming, data structures & algorithms",
+        "Hands-on experience with full-stack development & data analytics",
+        "Active participation in technical workshops and seminars",
+        "Multiple projects in web development and data science"
       ]
     },
     {
       id: 2,
-      degree: "Intermediate",
+      degree: "Intermediate (Class XII)",
       field: "Science Stream",
       institution: "RPM Children's Academy",
-      period: "2020 - 2022",
+      period: "2022",
       status: "Completed",
-      grade: "65%",
       description: "Completed intermediate education with focus on mathematics, physics, and chemistry.",
       icon: <BookOpen className="h-6 w-6" />,
       color: "accent",
@@ -44,19 +44,36 @@ const Education = () => {
     },
     {
       id: 3,
-      degree: "High School",
+      degree: "High School (Class X)",
       field: "General Studies",
       institution: "RPM Children's Academy",
-      period: "2018 - 2020",
+      period: "2020",
       status: "Completed",
-      grade: "77%",
       description: "Completed secondary education with strong academic performance.",
       icon: <Award className="h-6 w-6" />,
       color: "primary",
       achievements: [
-        "Achieved 77% marks demonstrating consistent academic performance",
-        "Built strong foundation for higher education"
+        "Strong academic performance across all subjects",
+        "Built foundation for higher education in science & technology"
       ]
+    }
+  ];
+
+  const certifications = [
+    {
+      title: "Data Science Certification",
+      issuer: "ShapeMySkills",
+      icon: <ShieldCheck className="h-5 w-5" />
+    },
+    {
+      title: "Web Technologies",
+      issuer: "Softpro India Ltd.",
+      icon: <ShieldCheck className="h-5 w-5" />
+    },
+    {
+      title: "Java Programming",
+      issuer: "Softpro India Ltd.",
+      icon: <ShieldCheck className="h-5 w-5" />
     }
   ];
 
@@ -71,10 +88,10 @@ const Education = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Education
+            Education & Certifications
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Academic journey building the foundation for technical and analytical excellence
+            Academic journey and professional certifications building the foundation for technical excellence
           </p>
         </motion.div>
 
@@ -129,12 +146,6 @@ const Education = () => {
                       <div className="flex items-center gap-2 text-muted-foreground text-sm">
                         <Calendar className="h-4 w-4" />
                         <span>{education.period}</span>
-                        {education.grade && (
-                          <>
-                            <span className="mx-2">•</span>
-                            <span className="font-medium">Grade: {education.grade}</span>
-                          </>
-                        )}
                       </div>
                     </div>
 
@@ -162,12 +173,38 @@ const Education = () => {
           </div>
         </div>
 
+        {/* Certifications */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="mt-16"
+        >
+          <h3 className="text-2xl font-bold text-center mb-8 text-foreground">Professional Certifications</h3>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {certifications.map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 1.2 + index * 0.15 }}
+              >
+                <Card className="p-6 bg-gradient-card border-border/50 hover:shadow-hover transition-all duration-300 interactive-hover text-center h-full">
+                  <div className="text-primary mb-3 flex justify-center">{cert.icon}</div>
+                  <h4 className="font-bold text-foreground mb-2">{cert.title}</h4>
+                  <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Academic Focus */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="mt-12 text-center"
         >
           <Card className="p-8 bg-gradient-card border-border/50 max-w-4xl mx-auto">
             <h3 className="text-xl font-semibold mb-4 text-primary">Academic Focus Areas</h3>
@@ -181,8 +218,8 @@ const Education = () => {
                 <p className="text-sm text-muted-foreground">Computer Science & Engineering</p>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-accent mb-2">4+</div>
-                <p className="text-sm text-muted-foreground">Years of Technical Study</p>
+                <div className="text-2xl font-bold text-accent mb-2">3</div>
+                <p className="text-sm text-muted-foreground">Professional Certifications</p>
               </div>
             </div>
           </Card>

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
-import { Code, TrendingUp, Users, Target } from "lucide-react";
+import { Code, BarChart3, Database, Brain } from "lucide-react";
 import aboutImage from "@/assets/about-image.jpg";
 
 const About = () => {
@@ -13,22 +13,22 @@ const About = () => {
     {
       icon: <Code className="h-6 w-6" />,
       title: "Full Stack Development",
-      description: "Building scalable applications with modern tech stack"
+      description: "Building scalable web apps with React.js, Node.js, and modern frameworks"
     },
     {
-      icon: <TrendingUp className="h-6 w-6" />,
-      title: "Business Strategy",
-      description: "Driving revenue growth through strategic sales approaches"
+      icon: <BarChart3 className="h-6 w-6" />,
+      title: "Data Analytics",
+      description: "Transforming raw data into actionable insights with Python, SQL & Power BI"
     },
     {
-      icon: <Users className="h-6 w-6" />,
-      title: "Client Relations",
-      description: "Strengthening partnerships and maximizing client satisfaction"
+      icon: <Database className="h-6 w-6" />,
+      title: "Database Management",
+      description: "Designing efficient database architectures with SQL Server & MongoDB"
     },
     {
-      icon: <Target className="h-6 w-6" />,
-      title: "Lead Generation",
-      description: "Converting prospects into active clients via multiple channels"
+      icon: <Brain className="h-6 w-6" />,
+      title: "Machine Learning",
+      description: "Applying regression, classification, and model evaluation techniques"
     }
   ];
 
@@ -46,7 +46,7 @@ const About = () => {
             About Me
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A unique blend of technical expertise and business acumen
+            Where code meets data — building technology that drives decisions
           </p>
         </motion.div>
 
@@ -60,15 +60,15 @@ const About = () => {
           >
             <div className="prose prose-lg text-foreground max-w-none">
               <p className="text-lg leading-relaxed text-muted-foreground">
-                I'm an ambitious and driven professional with a unique skill set spanning 
-                <span className="text-primary font-semibold"> Full Stack Development</span> and 
-                <span className="text-accent font-semibold"> Business Development</span>.
+                I'm a final-year <span className="text-primary font-semibold">B.Tech Computer Science</span> student 
+                at BBD Engineering College, Lucknow, with a passion for building technology that solves real-world problems.
               </p>
               
               <p className="text-lg leading-relaxed text-muted-foreground">
-                My experience ranges from engineering scalable web applications with responsive 
-                interfaces and robust backend systems to generating leads through strategic 
-                outreach and converting prospects into active clients.
+                My expertise spans <span className="text-primary font-semibold">full-stack web development</span>, 
+                <span className="text-accent font-semibold"> data analytics & visualization</span>, and 
+                <span className="text-primary font-semibold"> machine learning</span>. I build analytics platforms, 
+                scalable web applications, and work with Python, SQL, JavaScript, and modern development tools.
               </p>
 
               <motion.div
@@ -79,8 +79,9 @@ const About = () => {
               >
                 <h3 className="text-xl font-semibold text-primary mb-3">Career Objective</h3>
                 <p className="text-muted-foreground italic">
-                  "Seeking opportunities where I can combine my technical knowledge with strategic 
-                  sales and client engagement to deliver impactful business solutions."
+                  "Seeking opportunities in Data Analytics, Software Development, or Technology-driven roles 
+                  where I can leverage my technical skills in Python, SQL, JavaScript, and data visualization 
+                  to deliver impactful solutions."
                 </p>
               </motion.div>
             </div>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart, Github, Mail, Phone } from "lucide-react";
+import { Heart, Github, Mail, Phone, Linkedin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,8 +7,13 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <Github className="h-5 w-5" />,
-      href: "https://github.com/maclare031",
+      href: "https://github.com/shivam-srivastava-031",
       label: "GitHub"
+    },
+    {
+      icon: <Linkedin className="h-5 w-5" />,
+      href: "https://linkedin.com/in/shivam-kumar-srivastava-675893211",
+      label: "LinkedIn"
     },
     {
       icon: <Mail className="h-5 w-5" />,
@@ -32,8 +37,8 @@ const Footer = () => {
               Shivam Kumar Srivastava
             </h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Full Stack Developer & Business Strategist passionate about creating 
-              scalable solutions and driving business growth through technology.
+              Full Stack Developer & Data Analyst passionate about building 
+              scalable web applications and transforming data into actionable insights.
             </p>
           </div>
 
@@ -113,7 +118,7 @@ const Footer = () => {
           className="text-center mt-8 pt-4 border-t border-border/20"
         >
           <p className="text-xs text-muted-foreground">
-            Open to new opportunities and collaborations. Let's build something amazing together!
+            Open to opportunities in Data Analytics, Software Development & Technology-driven roles. Let's build something amazing together!
           </p>
         </motion.div>
       </div>
