@@ -156,7 +156,7 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <Button className="w-full bg-accent hover:bg-accent/90 text-background font-semibold py-6 group" asChild>
-                <a href="/Shivam_Kumar_Srivastava_Resume.pdf" download>
+                <a href="/shivam-resume.docx" download>
                   📄 Download My Resume
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                 </a>

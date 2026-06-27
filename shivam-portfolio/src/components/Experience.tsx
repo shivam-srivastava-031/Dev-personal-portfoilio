@@ -2,33 +2,75 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Building, Heart, Wrench, Users, Globe, Target, BarChart3 } from "lucide-react";
+import { Calendar, MapPin, Building, Code2, Globe, Target, BarChart3, Server, GitBranch, Brain, Layers } from "lucide-react";
 
 const Experience = () => {
   const ref = useRef(null);
 
   const experiences = [
     {
-      id: 1, company: "ListenInn Foundation", role: "Founder & Technical Head", type: "NGO / Leadership",
-      period: "2025 – Present", location: "India", icon: <Heart className="h-6 w-6" />,
+      id: 1,
+      company: "Gravityer",
+      role: "Software Developer Intern",
+      type: "Internship · Present",
+      period: "2026 – Present",
+      location: "India",
+      icon: <Server className="h-6 w-6" />,
       responsibilities: [
-        { icon: <Globe className="h-5 w-5" />, title: "Organizational Leadership", description: "Founded and managed a technology-driven NGO focused on community development and social impact initiatives", color: "text-primary" },
-        { icon: <Users className="h-5 w-5" />, title: "Volunteer Coordination", description: "Led volunteer coordination, strategic planning, and execution of awareness campaigns and outreach programs", color: "text-accent" },
-        { icon: <BarChart3 className="h-5 w-5" />, title: "Data-Driven Operations", description: "Managed organizational data, reports, and operational workflows to improve decision-making efficiency", color: "text-primary" },
-        { icon: <Target className="h-5 w-5" />, title: "Digital Strategy & Analytics", description: "Utilized digital tools and analytical approaches to optimize communication, engagement, and campaign performance", color: "text-accent" },
+        { icon: <Code2 className="h-5 w-5" />,    title: "Backend Development",          description: "Building API-driven backend solutions using Python, Django, REST APIs, and database technologies with focus on clean architecture.", color: "text-primary" },
+        { icon: <Globe className="h-5 w-5" />,     title: "Google Ads API Integration",   description: "Implementing OAuth 2.0 authentication, campaign workflows, lead synchronization, and analytics tracking via Google Ads API.", color: "text-accent" },
+        { icon: <Target className="h-5 w-5" />,    title: "Automation & Integrations",    description: "Developing third-party integrations and automation workflows to streamline business processes and reduce manual effort.", color: "text-primary" },
+        { icon: <GitBranch className="h-5 w-5" />, title: "Production Engineering",       description: "Collaborating via Git workflows, debugging production issues, and delivering maintainable, scalable backend modules.", color: "text-accent" },
       ],
-      impactStatement: "Coordinated cross-functional teams and collaborated with stakeholders to drive project execution and organizational growth.",
+      impactStatement: "Delivering production-level features for real-world business workflows, with hands-on experience in API ecosystems and OAuth-based authentication.",
     },
     {
-      id: 2, company: "Arka Build Constructions", role: "Technical Head", type: "Full-Time · 6 Months",
-      period: "6 Months", location: "India", icon: <Building className="h-6 w-6" />,
+      id: 2,
+      company: "Arka Build Constructions",
+      role: "Web Developer Intern",
+      type: "Internship",
+      period: "Internship Experience",
+      location: "India",
+      icon: <Building className="h-6 w-6" />,
       responsibilities: [
-        { icon: <Wrench className="h-5 w-5" />, title: "Technical Operations", description: "Led technical operations and managed digital workflows for organizational projects and internal systems", color: "text-primary" },
-        { icon: <Users className="h-5 w-5" />, title: "Team Coordination", description: "Coordinated with teams to streamline project execution, reporting, and technical communication processes", color: "text-accent" },
-        { icon: <Globe className="h-5 w-5" />, title: "System Management", description: "Managed web-based tools, data handling processes, and technical documentation for operational efficiency", color: "text-primary" },
-        { icon: <Target className="h-5 w-5" />, title: "Technology Integration", description: "Assisted in technology integration, system optimization, and digital process management across projects", color: "text-accent" },
+        { icon: <Globe className="h-5 w-5" />,     title: "Responsive Web Development",  description: "Developed and maintained company web solutions to improve online presence and user engagement across devices.", color: "text-primary" },
+        { icon: <Layers className="h-5 w-5" />,    title: "Frontend UI & Optimization",   description: "Built responsive interfaces with focus on usability and performance, including UI improvements and website optimization.", color: "text-accent" },
+        { icon: <Server className="h-5 w-5" />,    title: "Backend Integration",          description: "Integrated backend services and managed website-related technical updates to keep systems functional and up-to-date.", color: "text-primary" },
+        { icon: <Target className="h-5 w-5" />,    title: "Digital Workflows",            description: "Collaborated with the team to implement design requirements and improve digital workflows across the web platform.", color: "text-accent" },
       ],
-      impactStatement: "Applied problem-solving, analytical thinking, and technical management skills in a professional work environment.",
+      impactStatement: "Improved the company's digital presence through responsive design and backend integrations, contributing to better user engagement.",
+    },
+    {
+      id: 3,
+      company: "Listenin Foundation",
+      role: "Founder & Senior Developer",
+      type: "Founder · Tech Leadership",
+      period: "Founder Experience",
+      location: "India",
+      icon: <Layers className="h-6 w-6" />,
+      responsibilities: [
+        { icon: <Target className="h-5 w-5" />,    title: "Product Leadership",           description: "Founded and led end-to-end product development including planning, architecture design, development, and deployment.", color: "text-primary" },
+        { icon: <Code2 className="h-5 w-5" />,     title: "Full Stack Development",       description: "Built and maintained web applications with focus on scalability, performance, and user experience across frontend and backend.", color: "text-accent" },
+        { icon: <Server className="h-5 w-5" />,    title: "Database & API Integration",   description: "Handled database management, API integrations, and technical decision-making for platform functionality.", color: "text-primary" },
+        { icon: <GitBranch className="h-5 w-5" />, title: "Team & Stakeholder Sync",      description: "Collaborated with teams and stakeholders to convert ideas into functional software solutions and manage feature delivery.", color: "text-accent" },
+      ],
+      impactStatement: "Built an impactful technology-driven platform from the ground up — managing both technical execution and organizational leadership.",
+    },
+    {
+      id: 4,
+      company: "Full Stack & AI Projects",
+      role: "Independent Developer",
+      type: "Projects · Self-Driven",
+      period: "Ongoing",
+      location: "Remote",
+      icon: <Brain className="h-6 w-6" />,
+      responsibilities: [
+        { icon: <Code2 className="h-5 w-5" />,    title: "Full Stack Applications",      description: "Built web apps with authentication systems, database management, REST APIs, and AI-based features using Django and Supabase.", color: "text-primary" },
+        { icon: <Globe className="h-5 w-5" />,     title: "OAuth & Auth Systems",         description: "Implemented OAuth 2.0 and Google Sign-In authentication flows in production-grade web applications.", color: "text-accent" },
+        { icon: <Brain className="h-5 w-5" />,     title: "AI Chatbot Development",       description: "Built AI chatbot solutions for automated responses and catalog-based information retrieval in real-world scenarios.", color: "text-primary" },
+        { icon: <BarChart3 className="h-5 w-5" />, title: "Data Science & AI Research",   description: "Explored Artificial Intelligence and Data Science applications through research and practical implementations.", color: "text-accent" },
+      ],
+      impactStatement: "Applied full-stack and AI skills to solve real problems — bridging backend engineering, data, and intelligent automation.",
     },
   ];
 
@@ -60,7 +102,7 @@ const Experience = () => {
             Professional Experience
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Leadership roles combining technical expertise with strategic execution
+            Backend engineering, full-stack development, and AI — building real products in real environments
           </p>
         </motion.div>
 
@@ -150,9 +192,9 @@ const Experience = () => {
           transition={{ duration: 0.8 }}
           className="mt-16 text-center"
         >
-          <h3 className="text-xl font-semibold mb-6 text-foreground">Skills Applied & Enhanced</h3>
+          <h3 className="text-xl font-semibold mb-6 text-foreground">Technologies & Skills Used</h3>
           <div className="flex flex-wrap justify-center gap-3">
-            {["Technical Leadership", "Strategic Planning", "Data-Driven Decisions", "Digital Operations", "Team Collaboration", "Project Management", "Stakeholder Engagement", "System Optimization"].map((skill, index) => (
+            {["Python", "Django", "REST APIs", "Google Ads API", "OAuth 2.0", "Supabase", "SQL", "JavaScript", "React.js", "Git & GitHub", "Postman", "AI & Data Science", "Full Stack Dev", "Backend Architecture"].map((skill, index) => (
               <motion.span
                 key={index}
                 className="tag-pill px-4 py-2 bg-secondary/30 text-secondary-foreground rounded-full text-sm font-medium border border-border/30"

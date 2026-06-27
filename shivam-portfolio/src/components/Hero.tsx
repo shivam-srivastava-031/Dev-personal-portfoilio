@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Mail, Eye, Download, Linkedin, ArrowRight } from "lucide-react";
+import { ChevronDown, Mail, Eye, Download, Linkedin } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import heroImage from "@/assets/hero-bg.jpg";
 
@@ -156,12 +156,79 @@ const Hero = () => {
         >
           {/* Status Badge */}
           <motion.div variants={item} className="flex justify-center">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md">
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow" />
-              <span className="text-sm text-primary font-medium tracking-wide">
-                Open to Opportunities
-              </span>
-              <ArrowRight className="h-3 w-3 text-primary" />
+            <div className="relative inline-block">
+
+              {/* Sparkle particles orbiting the badge */}
+              {[
+                { top: -8,  left: 24,    delay: 0   },
+                { top: -6,  right: 32,   delay: 0.8 },
+                { bottom: -8, left: '28%', delay: 0.4 },
+                { bottom: -6, right: '26%', delay: 1.3 },
+              ].map((s, i) => (
+                <motion.span
+                  key={i}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-primary pointer-events-none"
+                  style={{ position: 'absolute', ...s } as object}
+                  animate={{ scale: [0, 1.6, 0], opacity: [0, 0.9, 0] }}
+                  transition={{ duration: 2.2, repeat: Infinity, delay: s.delay, ease: "easeInOut" }}
+                />
+              ))}
+
+              {/* Badge with rotating gradient border */}
+              <motion.div
+                className="border-glow inline-flex items-center gap-3 px-6 py-3 rounded-full bg-background/80 backdrop-blur-md cursor-default"
+                whileHover={{ scale: 1.06, y: -2 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+              >
+                <div className="relative z-10 flex items-center gap-3">
+
+                  {/* Multi-ring pulsing indicator */}
+                  <div className="relative flex items-center justify-center w-5 h-5 shrink-0">
+                    <motion.span
+                      className="absolute w-5 h-5 rounded-full bg-primary/35"
+                      animate={{ scale: [1, 2.6], opacity: [0.55, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                    />
+                    <motion.span
+                      className="absolute w-5 h-5 rounded-full bg-primary/20"
+                      animate={{ scale: [1, 2.6], opacity: [0.4, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.55 }}
+                    />
+                    <span
+                      className="relative w-2.5 h-2.5 rounded-full bg-primary"
+                      style={{ boxShadow: '0 0 10px 2px rgba(0,212,170,0.7)' }}
+                    />
+                  </div>
+
+                  {/* Shimmer text */}
+                  <span className="text-sm font-semibold tracking-wide gradient-text-animated whitespace-nowrap">
+                    Open to Opportunities
+                  </span>
+
+                  {/* Available pill */}
+                  <motion.div
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30"
+                    animate={{
+                      boxShadow: [
+                        '0 0 0px rgba(52,211,153,0)',
+                        '0 0 10px rgba(52,211,153,0.35)',
+                        '0 0 0px rgba(52,211,153,0)',
+                      ],
+                    }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <motion.div
+                      className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                      animate={{ opacity: [1, 0.3, 1] }}
+                      transition={{ duration: 1.2, repeat: Infinity }}
+                    />
+                    <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">
+                      Available
+                    </span>
+                  </motion.div>
+
+                </div>
+              </motion.div>
             </div>
           </motion.div>
 
@@ -241,7 +308,7 @@ const Hero = () => {
               className="bg-accent/90 hover:bg-accent text-background px-8 py-6 text-lg font-semibold group"
               asChild
             >
-              <a href="/Shivam_Kumar_Srivastava_Resume.pdf" download="Shivam_Kumar_Srivastava_Resume.pdf">
+              <a href="/shivam-resume.docx" download="shivam-resume.docx">
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                 Download Resume
               </a>
