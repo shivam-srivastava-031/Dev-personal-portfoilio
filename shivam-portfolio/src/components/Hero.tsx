@@ -1,9 +1,10 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, type Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Mail, Eye, Download, Linkedin } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import heroImage from "@/assets/hero-bg.jpg";
+import shivamPhoto from "@/assets/shivam-photo.jpg";
 
 const roles = [
   "Full Stack Developer",
@@ -11,6 +12,13 @@ const roles = [
   "Problem Solver",
   "Python Developer",
   "React.js Developer",
+];
+
+const skillChips = [
+  { label: "Django REST", icon: "⚡", color: "primary", side: "left",  top: "38%" },
+  { label: "AI / ML",     icon: "🤖", color: "accent",  side: "right", top: "28%" },
+  { label: "React.js",    icon: "⚛️",  color: "primary", side: "left",  top: "62%" },
+  { label: "Python",      icon: "🐍", color: "accent",  side: "right", top: "62%" },
 ];
 
 const Hero = () => {
@@ -27,97 +35,113 @@ const Hero = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Typewriter effect
   useEffect(() => {
     const role = roles[currentRole];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          setDisplayText(role.substring(0, displayText.length + 1));
-          if (displayText.length === role.length) {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          setDisplayText(role.substring(0, displayText.length - 1));
-          if (displayText.length === 0) {
-            setIsDeleting(false);
-            setCurrentRole((prev) => (prev + 1) % roles.length);
-          }
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setDisplayText(role.substring(0, displayText.length + 1));
+        if (displayText.length === role.length) setTimeout(() => setIsDeleting(true), 2000);
+      } else {
+        setDisplayText(role.substring(0, displayText.length - 1));
+        if (displayText.length === 0) {
+          setIsDeleting(false);
+          setCurrentRole((prev) => (prev + 1) % roles.length);
         }
-      },
-      isDeleting ? 40 : 80
-    );
+      }
+    }, isDeleting ? 40 : 80);
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, currentRole]);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Stagger container
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.3 },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8 } },
   };
+
+  // Mouse-position parallax — different depths for orbs, photo, and text
+  const heroMouseX = useMotionValue(0);
+  const heroMouseY = useMotionValue(0);
+
+  const orbX = useSpring(useTransform(heroMouseX, [-0.5, 0.5], [-22, 22]), { stiffness: 55, damping: 18 });
+  const orbY = useSpring(useTransform(heroMouseY, [-0.5, 0.5], [-14, 14]), { stiffness: 55, damping: 18 });
+  const photoX = useSpring(useTransform(heroMouseX, [-0.5, 0.5], [-32, 32]), { stiffness: 75, damping: 22 });
+  const photoY = useSpring(useTransform(heroMouseY, [-0.5, 0.5], [-20, 20]), { stiffness: 75, damping: 22 });
+
+  const onHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    heroMouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    heroMouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const onHeroMouseLeave = () => {
+    heroMouseX.set(0);
+    heroMouseY.set(0);
+  };
+
+  // Live IST clock
+  const [istTime, setIstTime] = useState(() =>
+    new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false })
+  );
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIstTime(new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false }));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden noise-overlay"
+      onMouseMove={onHeroMouseMove}
+      onMouseLeave={onHeroMouseLeave}
     >
-      {/* Parallax Background Image */}
+      {/* Parallax Background */}
       <motion.div className="absolute inset-0" style={{ y }}>
-        <img
-          src={heroImage}
-          alt="Hero Background"
-          className="w-full h-[120%] object-cover opacity-20"
-        />
+        <img src={heroImage} alt="" className="w-full h-[120%] object-cover opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/90 to-background" />
       </motion.div>
 
-      {/* Particle Canvas */}
+      {/* Hex grid */}
+      <div className="hex-grid-bg opacity-40" />
+
+      {/* Neural Particle Canvas */}
       <ParticleBackground />
 
-      {/* Morphing Gradient Orbs */}
+      {/* Morphing gradient orbs — shift with mouse at slowest depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/8 to-accent/5 blur-[100px]"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-accent/5 to-primary/8 blur-[100px]"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            x: [0, -20, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
+        <motion.div className="absolute inset-0" style={{ x: orbX, y: orbY }}>
+          <motion.div
+            className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-primary/8 to-accent/5 blur-[100px]"
+            animate={{ scale: [1, 1.2, 1], x: [0, 30, 0], y: [0, -20, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-accent/5 to-primary/8 blur-[100px]"
+            animate={{ scale: [1.2, 1, 1.2], x: [0, -20, 0], y: [0, 30, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* Violet AI orb */}
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-violet-500/5 to-primary/5 blur-[80px]"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
       </div>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
+      {/* Grid overlay */}
+      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
 
-      {/* Floating Dots */}
+      {/* Floating dots */}
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
@@ -134,61 +158,126 @@ const Hero = () => {
             x: [0, (Math.random() - 0.5) * 20, 0],
             opacity: [0.2, 0.6, 0.2],
           }}
-          transition={{
-            duration: 3 + Math.random() * 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: Math.random() * 2,
-          }}
+          transition={{ duration: 3 + Math.random() * 4, repeat: Infinity, ease: "easeInOut", delay: Math.random() * 2 }}
         />
       ))}
 
       {/* Main Content */}
       <motion.div
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20"
         style={{ opacity }}
       >
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="space-y-8"
-        >
+        <motion.div variants={container} initial="hidden" animate="show" className="space-y-7">
+
+          {/* ── Profile Photo Frame — floats at deepest depth ── */}
+          <motion.div variants={item} className="flex justify-center">
+            <motion.div style={{ x: photoX, y: photoY }}>
+            <div className="relative w-44 h-44 md:w-52 md:h-52">
+
+              {/* Outer ambient glow */}
+              <motion.div
+                className="absolute -inset-6 rounded-full"
+                style={{ background: "radial-gradient(circle, rgba(0,212,170,0.18) 0%, transparent 70%)" }}
+                animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Rotating conic-gradient border */}
+              <motion.div
+                className="absolute -inset-[3px] rounded-full"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, #00D4AA 0%, transparent 25%, #FFD700 50%, transparent 75%, #00D4AA 100%)",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              />
+
+              {/* Dark fill ring */}
+              <div className="absolute inset-[3px] rounded-full bg-background" />
+
+              {/* Secondary slower ring */}
+              <motion.div
+                className="absolute -inset-[8px] rounded-full opacity-30"
+                style={{ border: "1px solid rgba(0,212,170,0.4)" }}
+                animate={{ rotate: -360, scale: [1, 1.05, 1] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              />
+
+              {/* Photo */}
+              <div className="absolute inset-[6px] rounded-full overflow-hidden neural-ring neon-frame-teal photo-scanlines">
+                <img
+                  src={shivamPhoto}
+                  alt="Shivam Kumar Srivastava"
+                  className="w-full h-full object-cover object-top scale-105"
+                />
+                {/* Holographic overlay */}
+                <div className="holographic absolute inset-0" />
+              </div>
+
+              {/* Online indicator */}
+              <motion.div
+                className="absolute bottom-[10px] right-[10px] z-20 w-5 h-5 rounded-full bg-emerald-400 border-[3px] border-background"
+                animate={{
+                  boxShadow: [
+                    "0 0 0px rgba(52,211,153,0.9)",
+                    "0 0 16px rgba(52,211,153,0.9)",
+                    "0 0 0px rgba(52,211,153,0.9)",
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+
+              {/* Floating skill chips — desktop only */}
+              {skillChips.map((chip, i) => (
+                <motion.div
+                  key={i}
+                  className={`data-badge absolute hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border backdrop-blur-md whitespace-nowrap ${
+                    chip.color === "primary"
+                      ? "border-primary/30 bg-primary/8 text-primary"
+                      : "border-accent/30 bg-accent/8 text-accent"
+                  }`}
+                  style={{
+                    top: chip.top,
+                    [chip.side]: chip.side === "left" ? "-128px" : "-116px",
+                    transform: "translateY(-50%)",
+                  }}
+                  animate={{ y: [0, i % 2 === 0 ? -5 : 4, 0], x: [0, i % 2 === 0 ? -2 : 2, 0] }}
+                  transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+                >
+                  <span>{chip.icon}</span>
+                  <span>{chip.label}</span>
+                </motion.div>
+              ))}
+            </div>
+            </motion.div>
+          </motion.div>
+
           {/* Name */}
           <motion.h1
             variants={item}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight"
           >
-            <span className="gradient-text-animated">
+            <span className="gradient-text-animated glitch" data-text="Shivam Kumar">
               Shivam Kumar
             </span>
             <br />
-            <span className="text-foreground">
-              Srivastava
-            </span>
+            <span className="text-foreground">Srivastava</span>
           </motion.h1>
 
           {/* Typewriter Role */}
           <motion.div variants={item} className="h-10 flex items-center justify-center">
-            <span className="text-xl md:text-2xl font-medium text-muted-foreground">
-              {"< "}
-            </span>
-            <span className="text-xl md:text-2xl font-semibold text-primary mx-1 font-mono">
-              {displayText}
-            </span>
+            <span className="text-xl md:text-2xl font-medium text-muted-foreground">{"< "}</span>
+            <span className="text-xl md:text-2xl font-semibold text-primary mx-1 font-mono">{displayText}</span>
             <motion.span
               className="text-xl md:text-2xl font-semibold text-primary"
               animate={{ opacity: [1, 0] }}
               transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-            >
-              |
-            </motion.span>
-            <span className="text-xl md:text-2xl font-medium text-muted-foreground">
-              {" />"}
-            </span>
+            >|</motion.span>
+            <span className="text-xl md:text-2xl font-medium text-muted-foreground">{" />"}</span>
           </motion.div>
 
-          {/* Status Badge – below typewriter, clear of nav */}
+          {/* Status Badge */}
           <motion.div variants={item} className="flex justify-center">
             <motion.div
               className="border-glow inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-background/80 backdrop-blur-md cursor-default"
@@ -196,7 +285,6 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
             >
               <div className="relative z-10 flex items-center gap-3">
-                {/* Multi-ring pulsing dot */}
                 <div className="relative flex items-center justify-center w-4 h-4 shrink-0">
                   <motion.span
                     className="absolute w-4 h-4 rounded-full bg-primary/35"
@@ -208,27 +296,14 @@ const Hero = () => {
                     animate={{ scale: [1, 2.6], opacity: [0.4, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.55 }}
                   />
-                  <span
-                    className="relative w-2 h-2 rounded-full bg-primary"
-                    style={{ boxShadow: '0 0 8px 2px rgba(0,212,170,0.7)' }}
-                  />
+                  <span className="relative w-2 h-2 rounded-full bg-primary" style={{ boxShadow: "0 0 8px 2px rgba(0,212,170,0.7)" }} />
                 </div>
-
-                {/* Shimmer text */}
                 <span className="text-sm font-semibold tracking-wide gradient-text-animated whitespace-nowrap">
                   Open to Opportunities
                 </span>
-
-                {/* Available pill */}
                 <motion.div
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30"
-                  animate={{
-                    boxShadow: [
-                      '0 0 0px rgba(52,211,153,0)',
-                      '0 0 10px rgba(52,211,153,0.35)',
-                      '0 0 0px rgba(52,211,153,0)',
-                    ],
-                  }}
+                  animate={{ boxShadow: ["0 0 0px rgba(52,211,153,0)", "0 0 10px rgba(52,211,153,0.35)", "0 0 0px rgba(52,211,153,0)"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <motion.div
@@ -236,10 +311,29 @@ const Hero = () => {
                     animate={{ opacity: [1, 0.3, 1] }}
                     transition={{ duration: 1.2, repeat: Infinity }}
                   />
-                  <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">
-                    Available
-                  </span>
+                  <span className="text-[10px] font-bold text-emerald-400 tracking-widest uppercase">Available</span>
                 </motion.div>
+
+                {/* Divider */}
+                <div className="w-px h-4 bg-border/40" />
+
+                {/* Live IST clock */}
+                <div className="flex items-center gap-1">
+                  <motion.span
+                    className="w-1 h-1 rounded-full bg-primary/60"
+                    animate={{ opacity: [1, 0.3, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                  <motion.span
+                    key={istTime}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[10px] font-mono text-muted-foreground/70 tracking-wider"
+                  >
+                    {istTime} IST
+                  </motion.span>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -256,10 +350,7 @@ const Hero = () => {
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div
-            variants={item}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2"
-          >
+          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold group relative overflow-hidden"
@@ -294,10 +385,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Social Links */}
-          <motion.div
-            variants={item}
-            className="flex justify-center gap-3 pt-2"
-          >
+          <motion.div variants={item} className="flex justify-center gap-3 pt-2">
             {[
               {
                 href: "https://github.com/shivam-srivastava-031",
@@ -308,16 +396,8 @@ const Hero = () => {
                   </svg>
                 ),
               },
-              {
-                href: "https://linkedin.com/in/shivam-kumar-srivastava-675893211",
-                label: "LinkedIn",
-                icon: <Linkedin className="h-5 w-5" />,
-              },
-              {
-                href: "mailto:shivamsrivastava@1307",
-                label: "Email",
-                icon: <Mail className="h-5 w-5" />,
-              },
+              { href: "https://linkedin.com/in/shivam-kumar-srivastava-675893211", label: "LinkedIn", icon: <Linkedin className="h-5 w-5" /> },
+              { href: "mailto:shivamsrivastava@1307", label: "Email", icon: <Mail className="h-5 w-5" /> },
             ].map((social, i) => (
               <motion.a
                 key={i}
@@ -348,9 +428,7 @@ const Hero = () => {
             className="cursor-pointer flex flex-col items-center gap-2"
             onClick={() => scrollToSection("about")}
           >
-            <span className="text-xs text-muted-foreground tracking-widest uppercase">
-              Scroll
-            </span>
+            <span className="text-xs text-muted-foreground tracking-widest uppercase">Scroll</span>
             <ChevronDown className="h-6 w-6 text-primary" />
           </motion.div>
         </motion.div>
