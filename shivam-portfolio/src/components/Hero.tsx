@@ -241,7 +241,7 @@ const Hero = () => {
               className="bg-accent/90 hover:bg-accent text-background px-8 py-6 text-lg font-semibold group"
               asChild
             >
-              <a href="/Shivam_Kumar_Srivastava_Resume.pdf" download="Shivam_Kumar_Srivastava_Resume.pdf">
+              <a href="/shivam-resume.docx" download="shivam-resume.docx">
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                 Download Resume
               </a>

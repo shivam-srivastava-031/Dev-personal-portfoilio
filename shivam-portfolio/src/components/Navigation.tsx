@@ -111,7 +111,7 @@ const Navigation = () => {
 
             {/* Resume CTA */}
             <motion.a
-              href="/Shivam_Kumar_Srivastava_Resume.pdf"
+              href="/shivam-resume.docx"
               download
               className="ml-4 px-4 py-2 text-sm font-semibold bg-primary/10 text-primary border border-primary/20 rounded-lg hover:bg-primary/20 hover:border-primary/30 transition-all duration-300"
               initial={{ opacity: 0, y: -20 }}
