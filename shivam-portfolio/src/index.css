@@ -6,6 +6,11 @@
    DESIGN SYSTEM — Premium Dark Portfolio
    ═══════════════════════════════════════════════════ */
 
+/* Hide native cursor on mouse devices — CustomCursor replaces it */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
 @layer base {
   :root {
     /* Deep Black Background */
@@ -493,3 +498,167 @@
 }
 .animate-orbit { animation: orbit 20s linear infinite; }
 .animate-particle { animation: particleDrift 8s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════
+   WEB3 / WEB4 DESIGN LAYER
+   ═══════════════════════════════════════════════════ */
+
+/* ──── Hex Grid Background ──── */
+.hex-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34z' fill='none' stroke='rgba(0%2C212%2C170%2C0.07)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V50l28-16 28 16v34z' fill='none' stroke='rgba(0%2C212%2C170%2C0.07)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 100px;
+}
+
+/* ──── Holographic shimmer overlay ──── */
+.holographic {
+  background: linear-gradient(
+    135deg,
+    rgba(0,212,170,0.12) 0%,
+    rgba(255,215,0,0.08) 25%,
+    rgba(139,92,246,0.10) 50%,
+    rgba(0,212,170,0.08) 75%,
+    rgba(255,215,0,0.12) 100%
+  );
+  background-size: 400% 400%;
+  animation: holographicShift 6s ease infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ──── Scanline photo overlay ──── */
+.photo-scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,212,170,0.018) 2px,
+    rgba(0,212,170,0.018) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* ──── Data badge chip ──── */
+.data-badge {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ──── Neural neon ring pulse ──── */
+.neural-ring {
+  animation: neuralRingPulse 3s ease-in-out infinite;
+}
+
+/* ──── Circuit corner brackets ──── */
+.circuit-tl::before {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px;
+  width: 18px; height: 18px;
+  border-top: 1.5px solid hsl(var(--primary) / 0.5);
+  border-left: 1.5px solid hsl(var(--primary) / 0.5);
+  pointer-events: none;
+}
+
+.circuit-br::after {
+  content: '';
+  position: absolute;
+  bottom: 8px; right: 8px;
+  width: 18px; height: 18px;
+  border-bottom: 1.5px solid hsl(var(--accent) / 0.5);
+  border-right: 1.5px solid hsl(var(--accent) / 0.5);
+  pointer-events: none;
+}
+
+/* ──── Glitch text ──── */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.glitch::before {
+  color: hsl(var(--primary) / 0.7);
+  animation: glitchA 9s 2s infinite linear;
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  transform: translateX(-2px);
+}
+
+.glitch::after {
+  color: hsl(var(--accent) / 0.6);
+  animation: glitchB 9s 2.5s infinite linear;
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  transform: translateX(2px);
+}
+
+/* ──── Neon border on photo frame ──── */
+.neon-frame-teal {
+  box-shadow:
+    0 0 10px hsl(var(--primary) / 0.5),
+    0 0 25px hsl(var(--primary) / 0.25),
+    0 0 60px hsl(var(--primary) / 0.10),
+    inset 0 0 10px hsl(var(--primary) / 0.05);
+}
+
+/* ──── Web3 keyframes ──── */
+@keyframes holographicShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes neuralRingPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.5),
+                0 0 20px hsl(var(--primary) / 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 10px hsl(var(--primary) / 0),
+                0 0 40px hsl(var(--primary) / 0.3);
+  }
+}
+
+@keyframes glitchA {
+  0%,  89%, 91%, 93%, 100% { transform: translateX(-2px); opacity: 0; }
+  90% { transform: translateX(-4px); opacity: 0.8; }
+  92% { transform: translateX(2px); opacity: 0.6; }
+}
+
+@keyframes glitchB {
+  0%,  87%, 89%, 91%, 100% { transform: translateX(2px); opacity: 0; }
+  88% { transform: translateX(4px); opacity: 0.7; }
+  90% { transform: translateX(-2px); opacity: 0.5; }
+}
+
+@keyframes dataStreamDown {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  5%   { opacity: 0.7; }
+  95%  { opacity: 0.7; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33%  { transform: translateY(-5px) translateX(2px); }
+  66%  { transform: translateY(-2px) translateX(-2px); }
+}

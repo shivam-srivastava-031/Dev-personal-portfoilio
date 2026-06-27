@@ -10,10 +10,14 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FluidSimulation from "@/components/FluidSimulation";
 import CursorGlow from "@/components/CursorGlow";
+import CustomCursor from "@/components/CustomCursor";
+import ClickBurst from "@/components/ClickBurst";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
+      <ClickBurst />
       <FluidSimulation />
       <CursorGlow />
       <ScrollProgress />

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,13 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Github, MapPin, Send, User, MessageSquare, Linkedin } from "lucide-react";
 import emailjs from '@emailjs/browser';
+import SectionBackground from "./SectionBackground";
+import MagneticCard from "./MagneticCard";
+
+const sweepVariants: Variants = {
+  rest: { x: "-150%" },
+  hover: { x: "150%", transition: { duration: 0.55 } },
+};
 
 const Contact = () => {
   const ref = useRef(null);
@@ -31,26 +38,20 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // NOTE: Replace these with your actual EmailJS credentials
-      // You can get them by creating an account at emailjs.com
       const serviceId = "service_u1hinzb";
       const templateId = "template_1jo1r2f";
       const publicKey = "BWJ6IWb6zEqhPxK2r";
-
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
         to_email: "shivamsrivastava@1307",
         message: formData.message,
       };
-
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      
       toast({ title: "Message sent successfully!", description: "Thank you for reaching out. I'll get back to you soon." });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       console.error("EmailJS Error:", error);
-      // Fallback for demo purposes if EmailJS isn't configured yet
       toast({ title: "Note:", description: "Form submitted. (Configure EmailJS to receive actual emails).", variant: "default" });
       setFormData({ name: "", email: "", message: "" });
     } finally {
@@ -58,25 +59,31 @@ const Contact = () => {
     }
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, filter: "blur(5px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.93, filter: "blur(10px)" },
+    visible: {
+      opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
+      transition: { duration: 0.7 },
+    },
   };
 
   return (
-    <section id="contact" className="py-24 px-6 relative">
+    <section id="contact" className="py-24 px-6 relative overflow-hidden">
+      <SectionBackground orbCount={3} sparkleCount={10} />
       <div className="section-divider mb-24" />
-      <div className="max-w-6xl mx-auto" ref={ref}>
+
+      <div className="max-w-6xl mx-auto relative z-10" ref={ref}>
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50, scale: 0.94, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.85 }}
           className="text-center mb-16"
         >
           <span className="inline-block text-sm font-semibold text-primary tracking-widest uppercase mb-4">
@@ -93,10 +100,10 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -60, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.9 }}
             className="space-y-8"
           >
             <div>
@@ -106,37 +113,52 @@ const Contact = () => {
               </p>
             </div>
 
-            <motion.div className="space-y-3" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.div
+              className="space-y-3"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {contactInfo.map((info, index) => (
                 <motion.div key={index} variants={itemVariants}>
-                  <a
-                    href={info.href}
-                    target={info.href.startsWith("http") ? "_blank" : "_self"}
-                    rel={info.href.startsWith("http") ? "noopener noreferrer" : ""}
-                    className="block"
-                  >
-                    <Card className="p-4 glass-card group hover:border-primary/20 transition-all duration-300">
-                      <div className="flex items-center gap-4">
-                        <div className={`${info.color} p-3 bg-card rounded-xl icon-glow group-hover:scale-110 transition-all duration-300`}>
-                          {info.icon}
-                        </div>
-                        <div>
-                          <p className="font-semibold text-foreground group-hover:text-primary transition-colors">{info.label}</p>
-                          <p className="text-muted-foreground text-sm">{info.value}</p>
-                        </div>
-                      </div>
-                    </Card>
-                  </a>
+                  <MagneticCard strength={0.15}>
+                    <motion.div whileHover="hover" initial="rest">
+                      <a
+                        href={info.href}
+                        target={info.href.startsWith("http") ? "_blank" : "_self"}
+                        rel={info.href.startsWith("http") ? "noopener noreferrer" : ""}
+                        className="block"
+                      >
+                        <Card className="p-4 glass-card group hover:border-primary/20 transition-all duration-300 relative overflow-hidden">
+                          <motion.div
+                            className="absolute inset-0 pointer-events-none z-0"
+                            variants={sweepVariants}
+                            style={{ background: "linear-gradient(105deg, transparent 30%, rgba(0,212,170,0.09) 50%, transparent 70%)" }}
+                          />
+                          <div className="flex items-center gap-4 relative z-10">
+                            <div className={`${info.color} p-3 bg-card rounded-xl icon-glow group-hover:scale-110 transition-all duration-300`}>
+                              {info.icon}
+                            </div>
+                            <div>
+                              <p className="font-semibold text-foreground group-hover:text-primary transition-colors">{info.label}</p>
+                              <p className="text-muted-foreground text-sm">{info.value}</p>
+                            </div>
+                          </div>
+                        </Card>
+                      </a>
+                    </motion.div>
+                  </MagneticCard>
                 </motion.div>
               ))}
             </motion.div>
 
             {/* Status */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.75 }}
               className="glass-card rounded-xl p-5 border-primary/15"
             >
               <div className="flex items-center gap-3">
@@ -148,53 +170,85 @@ const Contact = () => {
               </p>
             </motion.div>
 
-            {/* Resume */}
+            {/* Resume Button */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <Button className="w-full bg-accent hover:bg-accent/90 text-background font-semibold py-6 group" asChild>
-                <a href="/shivam-resume.docx" download>
-                  📄 Download My Resume
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-              </Button>
+              <MagneticCard strength={0.3}>
+                <Button className="w-full bg-accent hover:bg-accent/90 text-background font-semibold py-6 group" asChild>
+                  <a href="/shivam-resume.docx" download>
+                    📄 Download My Resume
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                </Button>
+              </MagneticCard>
             </motion.div>
           </motion.div>
 
           {/* Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 60, scale: 0.95, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.9 }}
           >
-            <Card className="p-8 glass-card">
-              <h3 className="text-2xl font-bold mb-6 text-foreground">Send a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="flex items-center gap-2 text-sm"><User className="h-4 w-4" />Your Name</Label>
-                  <Input id="name" name="name" type="text" placeholder="Enter your full name" value={formData.name} onChange={handleInputChange} required className="bg-background/50 border-border/30 focus:border-primary/50 h-12" />
+            <motion.div whileHover="hover" initial="rest">
+              <Card className="p-8 glass-card relative overflow-hidden">
+                <motion.div
+                  className="absolute inset-0 pointer-events-none z-0"
+                  variants={sweepVariants}
+                  style={{ background: "linear-gradient(105deg, transparent 30%, rgba(0,212,170,0.06) 50%, transparent 70%)" }}
+                />
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-6 text-foreground">Send a Message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="flex items-center gap-2 text-sm"><User className="h-4 w-4" />Your Name</Label>
+                      <Input
+                        id="name" name="name" type="text" placeholder="Enter your full name"
+                        value={formData.name} onChange={handleInputChange} required
+                        className="bg-background/50 border-border/30 focus:border-primary/50 h-12"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="flex items-center gap-2 text-sm"><Mail className="h-4 w-4" />Email Address</Label>
+                      <Input
+                        id="email" name="email" type="email" placeholder="Enter your email address"
+                        value={formData.email} onChange={handleInputChange} required
+                        className="bg-background/50 border-border/30 focus:border-primary/50 h-12"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="flex items-center gap-2 text-sm"><MessageSquare className="h-4 w-4" />Message</Label>
+                      <Textarea
+                        id="message" name="message" placeholder="Tell me about your project or opportunity..."
+                        rows={5} value={formData.message} onChange={handleInputChange} required
+                        className="bg-background/50 border-border/30 focus:border-primary/50 resize-none"
+                      />
+                    </div>
+                    <MagneticCard strength={0.2}>
+                      <Button
+                        type="submit" disabled={isSubmitting}
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg font-semibold group"
+                      >
+                        {isSubmitting ? (
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="w-5 h-5 border-2 border-current border-t-transparent rounded-full"
+                          />
+                        ) : (
+                          <><Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />Send Message</>
+                        )}
+                      </Button>
+                    </MagneticCard>
+                  </form>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="flex items-center gap-2 text-sm"><Mail className="h-4 w-4" />Email Address</Label>
-                  <Input id="email" name="email" type="email" placeholder="Enter your email address" value={formData.email} onChange={handleInputChange} required className="bg-background/50 border-border/30 focus:border-primary/50 h-12" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="flex items-center gap-2 text-sm"><MessageSquare className="h-4 w-4" />Message</Label>
-                  <Textarea id="message" name="message" placeholder="Tell me about your project or opportunity..." rows={5} value={formData.message} onChange={handleInputChange} required className="bg-background/50 border-border/30 focus:border-primary/50 resize-none" />
-                </div>
-                <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6 text-lg font-semibold group">
-                  {isSubmitting ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-5 h-5 border-2 border-current border-t-transparent rounded-full" />
-                  ) : (
-                    <><Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />Send Message</>
-                  )}
-                </Button>
-              </form>
-            </Card>
+              </Card>
+            </motion.div>
           </motion.div>
         </div>
       </div>
