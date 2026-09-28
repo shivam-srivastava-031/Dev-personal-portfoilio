@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import "@/components/story/story.css";
 
 const NotFound = () => {
   const location = useLocation();
@@ -9,15 +10,19 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 underline hover:text-blue-700">
-          Return to Home
+    <main className="story flex items-center px-5 sm:px-8 lg:pl-40">
+      <div>
+        <p className="mono text-[var(--ember)] mb-6">Error 404 · Missing page</p>
+        <h1 className="display text-[clamp(3rem,10vw,8rem)] mb-8">
+          This page was
+          <br />
+          never <em>written.</em>
+        </h1>
+        <a href="/" className="mono text-[var(--paper)] link-line">
+          ← Back to the story
         </a>
       </div>
-    </div>
+    </main>
   );
 };
 
