@@ -1,17 +1,13 @@
 # Shivam Kumar Srivastava - Personal Portfolio
 
-![Portfolio Preview](./shivam-portfolio/src/assets/hero-bg.jpg)
-
-🚀 Welcome to my professional portfolio repository! This is a sleek, highly-interactive, and premium web application designed to showcase my journey as a **Full Stack Developer** and **Data Analyst**.
+A single-page, story-driven portfolio. It walks through my path as a **Full Stack Developer** and **Data Analyst** in six chapters and an epilogue, from school and my B.Tech to founding ListenInn Foundation and backend work at Gravityer.
 
 ## 🌟 Key Features
 
-- **Modern UI/UX**: Designed with a premium dark-theme aesthetic featuring glassmorphism, animated gradients, and floating elements.
-- **Dynamic Animations**: Extensive use of Framer Motion for scroll-reveals, staggered element rendering, magnetic buttons, and dynamic progress bars.
-- **Interactive Canvas**: Custom particle network background built with HTML5 Canvas.
-- **Fully Responsive**: Optimized for seamless viewing across mobile, tablet, and desktop devices.
-- **Functional Contact Form**: Integrated with EmailJS for direct, real-time message delivery.
-- **Component-Driven**: Built on a modular React architecture utilizing shadcn/ui.
+- **Chapter-based narrative**: sticky chapter headings, paragraphs that reveal word by word as you scroll, a table of contents, and a chapter rail with reading progress.
+- **Case-study project section**: four in-depth projects (context, what I built, architecture flow, key decisions and stack), followed by an archive index of other GitHub repos. Project facts were checked against each repo's source and git history.
+- **Editorial design**: a serif and mono type pairing (Fraunces and JetBrains Mono) on a warm dark palette, scoped in `components/story/story.css`.
+- **Responsive and accessible**: works from phone to desktop, and respects `prefers-reduced-motion`.
 
 ## 🛠️ Technology Stack
 
@@ -20,9 +16,6 @@
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Email Service**: [EmailJS](https://www.emailjs.com/)
 
 ## 📂 Project Structure
 
@@ -31,13 +24,13 @@ Dev-personal-portfoilio/
 ├── shivam-portfolio/
 │   ├── public/              # Static assets (including Resume)
 │   ├── src/
-│   │   ├── assets/          # Images and media files
-│   │   ├── components/      # Reusable React components (Hero, About, Projects, etc.)
-│   │   ├── components/ui/   # shadcn/ui foundational components
+│   │   ├── assets/          # Portrait photo
+│   │   ├── components/story/ # Story page sections; all copy lives in storyData.ts
+│   │   ├── components/ui/   # shadcn/ui primitives (toasts, tooltips)
 │   │   ├── hooks/           # Custom React hooks
-│   │   ├── pages/           # Route pages (Index)
+│   │   ├── pages/           # Story (home) and NotFound
 │   │   ├── App.tsx          # Main application wrapper
-│   │   └── index.css        # Global CSS and Design System (HSL tokens, keyframes)
+│   │   └── index.css        # Tailwind layers and theme tokens
 │   ├── package.json         # Dependencies and scripts
 │   └── vite.config.ts       # Vite configuration
 └── README.md
@@ -81,4 +74,4 @@ To use the contact form on your own fork, you will need to set up an account wit
 ## 🔗 Connect with me
 - **LinkedIn**: [Shivam Kumar Srivastava](https://linkedin.com/in/shivam-kumar-srivastava-675893211)
 - **GitHub**: [@shivam-srivastava-031](https://github.com/shivam-srivastava-031)
-- **Email**: shivamsrivastava@1307
+- **Email**: shivamsrivastava1307@gmail.com

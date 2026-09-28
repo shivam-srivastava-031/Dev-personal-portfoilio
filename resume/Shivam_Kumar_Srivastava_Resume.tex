@@ -1,0 +1,148 @@
+%------------------------------------------------------------------------------
+% Resume: Shivam Kumar Srivastava
+%
+% ATS notes
+%   - One column, standard section names, plain text only: no icons, images,
+%     tables, text boxes or multi-column layout.
+%   - Contact details sit in the body (many parsers skip headers/footers).
+%   - Fonts are Unicode-mapped and ligatures are off, so "fi"/"fl" extract as
+%     normal letters instead of special glyphs.
+%   - Compiles with pdfLaTeX (Overleaf default) or XeLaTeX.
+%
+% Anything in red (\fillin) is a placeholder: replace it before sending.
+%------------------------------------------------------------------------------
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+  \usepackage{microtype}
+  \DisableLigatures[f]{encoding = *, family = *}
+\else
+  \usepackage{fontspec}
+  \setmainfont{lmroman10}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold,
+    ItalicFont=*-italic, BoldItalicFont=*-bolditalic, Ligatures={TeX,NoCommon}]
+\fi
+
+\usepackage[a4paper,top=1.0cm,bottom=1.0cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Shivam Kumar Srivastava - Resume},
+  pdfauthor={Shivam Kumar Srivastava},
+  pdfsubject={Software Developer Resume},
+  pdfkeywords={Python, Django, FastAPI, REST APIs, PostgreSQL, React, TypeScript, Celery, Redis, Docker, OAuth 2.0}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedright
+
+\titleformat{\section}{\bfseries\large}{}{0pt}{\MakeUppercase}[\vspace{-6pt}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{7pt}{3pt}
+
+\setlist[itemize]{leftmargin=1.1em, itemsep=0.5pt, parsep=0pt, topsep=1pt, label=\textbullet}
+
+% \role{Organisation}{Dates}{Title}{Location}
+\newcommand{\role}[4]{%
+  \textbf{#1} \hfill #2\par
+  \textit{#3} \hfill \textit{#4}\par}
+
+% \project{Name}{Stack}{Link text}{URL}
+\newcommand{\project}[4]{%
+  \textbf{#1} \textbar{} \textit{#2} \hfill \href{#4}{#3}\par}
+
+\newcommand{\fillin}[1]{\textcolor{red}{\textbf{#1}}}
+
+\begin{document}
+
+%----------------------------------- HEADER -----------------------------------
+\begin{center}
+  {\LARGE\bfseries Shivam Kumar Srivastava}\par\vspace{3pt}
+  Lucknow, India \textbar{} +91 94504 33061 \textbar{}
+  \href{mailto:shivamsrivastava1307@gmail.com}{shivamsrivastava1307@gmail.com} \textbar{}
+  \href{https://shivam-personal-portfolio.vercel.app}{shivam-personal-portfolio.vercel.app}\par
+  \href{https://linkedin.com/in/shivam-kumar-srivastava-675893211}{linkedin.com/in/shivam-kumar-srivastava-675893211} \textbar{}
+  \href{https://github.com/shivam-srivastava-031}{github.com/shivam-srivastava-031}
+\end{center}
+
+%----------------------------------- SUMMARY ----------------------------------
+\section{Summary}
+Backend-focused software developer working in Python, Django and REST APIs. At Gravityer I build Google Ads
+API integrations, from OAuth 2.0 through lead sync. Outside work I have built a Celery and Redis workflow engine
+and the website for ListenInn Foundation, the mental-health NGO I founded.
+
+%----------------------------------- SKILLS -----------------------------------
+\section{Skills}
+\textbf{Languages:} Python, JavaScript, TypeScript, SQL, Java\par
+\textbf{Backend:} Django, FastAPI, Node.js, Express, REST APIs, OAuth 2.0, JWT, Celery, WebSockets, SQLAlchemy\par
+\textbf{Frontend \& Databases:} React, Tailwind CSS, HTML, CSS; PostgreSQL, MongoDB, SQL Server, Redis, Supabase\par
+\textbf{Data \& ML:} Pandas, NumPy, SciPy, Matplotlib, Seaborn, Hugging Face Transformers, Power BI, Excel\par
+\textbf{APIs \& Tools:} Google Ads API, Gemini API, Claude API, Git, Docker, nginx, pytest, Playwright, Vercel
+
+%---------------------------------- EXPERIENCE --------------------------------
+\section{Experience}
+\role{Gravityer}{\fillin{Mon 2026} -- Present}{Software Developer Intern}{India}
+\begin{itemize}
+  \item Integrate the Google Ads API, covering OAuth 2.0 authorization, campaign workflows, lead sync and analytics.
+  \item Build backend features and REST APIs in Python and Django.
+  \item Write third-party integrations and automation workflows that reduce manual work in business processes.
+  \item Debug production issues and ship fixes through the team's Git workflow.
+\end{itemize}
+\vspace{2pt}
+
+\role{ListenInn Foundation}{\fillin{Mon} 2025 -- Present}{Founder \& Technical Head}{India}
+\begin{itemize}
+  \item Founded a mental-health NGO; run its volunteer team and awareness campaigns.
+  \item Built and maintain the foundation's website (React 19, TypeScript, Vercel); its Gemini help assistant sits behind a serverless proxy, answers only about the foundation and has a local fallback.
+  \item Moved admin login into a serverless function and counseling-content edits behind a password-gated Supabase API.
+\end{itemize}
+\vspace{2pt}
+
+\role{Arka Build Constructions}{\fillin{Mon YYYY -- Mon YYYY}}{Technical Head}{Lucknow, India}
+\begin{itemize}
+  \item Maintained the company website and web tools, from responsive UI and performance fixes to backend integrations.
+  \item Turned team requests into web changes and kept technical docs, project data and reports up to date.
+\end{itemize}
+
+%---------------------------------- PROJECTS ----------------------------------
+\section{Projects}
+\project{Workflow Automation Engine}{Python, FastAPI, Celery, Redis, PostgreSQL, React, Docker}{GitHub}{https://github.com/shivam-srivastava-031/Workflow-Automation-System}
+\begin{itemize}
+  \item Self-hostable engine where users draw DAG workflows on a React Flow canvas; each node runs as an asynchronous Celery task on a per-type queue, retried only on transient errors.
+  \item Wrote the DAG validator (Kahn topological sort, cycle and config checks) and readiness scheduler as pure Python with no database or queue imports; the backend has 44 passing unit tests.
+  \item Streamed live run status over Redis pub/sub and WebSockets; added cron (RedBeat) and idempotent webhook triggers, argon2 cookie auth with rotating refresh tokens, and Fernet-encrypted credentials.
+\end{itemize}
+\vspace{2pt}
+
+\project{LinkedIn Post Bot}{Python, Gemini API, Playwright, Pydantic, Docker}{GitHub}{https://github.com/shivam-srivastava-031/Telegram_linkedin_post}
+\begin{itemize}
+  \item Telegram bot that drafts LinkedIn posts with Gemini as Pydantic-typed output, plus a matching SVG image card.
+  \item Treats model output as untrusted. An lxml guard rejects unsafe SVG, headless Chromium measures text for overflow, overlap and contrast, and failing cards go back to the model for up to three repair rounds.
+\end{itemize}
+\vspace{2pt}
+
+\project{aiciv: Verified-Knowledge Simulation}{Python, NumPy, SciPy, pytest}{GitHub}{https://github.com/shivam-srivastava-031/Dev-AI_world}
+\begin{itemize}
+  \item Reproducible multi-agent simulation where only a statistical verifier (hypothesis tests: Welch t-test or ANCOVA, Benjamini-Hochberg) can promote a claim to knowledge; trial records are HMAC-signed.
+\end{itemize}
+
+%---------------------------------- EDUCATION ---------------------------------
+\section{Education}
+B.Tech, Computer Science and Engineering, \textbf{BBD Engineering College}, Lucknow, India \hfill 2022 -- 2026\par
+Coursework: Data Structures and Algorithms, OOP, DBMS, Operating Systems, Computer Networks\par
+Intermediate (Class XII), Physics, Chemistry, Mathematics, \textbf{RPM Children's Academy} \hfill 2022\par
+
+%------------------------------- CERTIFICATIONS -------------------------------
+\section{Certifications}
+Data Science, ShapeMySkills \textbar{} Web Technologies, Softpro India Ltd. \textbar{} Java Programming, Softpro India Ltd.
+
+\end{document}
